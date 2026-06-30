@@ -1,18 +1,37 @@
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+android {
+    namespace "com.shiraz.museum"
+    compileSdkVersion 34
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    defaultConfig {
+        applicationId "com.shiraz.museum"
+        minSdkVersion 21
+        targetSdkVersion 34
+        versionCode 1
+        versionName "2.0.0"
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+        }
     }
 }
 
-rootProject.buildDir = "../build"
-subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-subprojects {
-    project.evaluationDependsOn(":app")
-}
-
-tasks.register("clean", Delete) {
-    delete rootProject.buildDir
+flutter {
+    source "../.."
 }
