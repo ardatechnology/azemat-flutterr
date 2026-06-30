@@ -6,6 +6,14 @@ workflows:
     environment:
       flutter: 3.24.5
     scripts:
+      - name: Regenerate android folder
+        script: |
+          cp android/app/src/main/AndroidManifest.xml /tmp/AndroidManifest.xml
+          cp -r android/app/src/main/res /tmp/res_backup
+          rm -rf android
+          flutter create --platforms=android --org com.shiraz .
+          cp /tmp/AndroidManifest.xml android/app/src/main/AndroidManifest.xml
+          cp -r /tmp/res_backup/* android/app/src/main/res/
       - name: Get dependencies
         script: flutter pub get
       - name: Build APK
